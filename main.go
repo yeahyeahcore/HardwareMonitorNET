@@ -71,7 +71,7 @@ func main() {
 		fmt.Println(age)
 	}
 
-	for i := 0; i <= 5; i++ {
+	for i := 0; i <= len(arr); i++ {
 		fmt.Println(i)
 	}
 
@@ -110,6 +110,7 @@ func pointer(b *int) {
 	*b += 2
 }
 
+//Cats ёпта бля
 type Cats struct {
 	name      string
 	age       int
