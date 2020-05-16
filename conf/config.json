@@ -1,0 +1,9 @@
+{
+    "server":{
+        "host":"www.google.com",
+        "port":"80"
+    },
+    "client":{
+        "time": "5"
+    }
+}
