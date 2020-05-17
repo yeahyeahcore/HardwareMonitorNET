@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"time"
 
@@ -14,7 +15,7 @@ import (
 )
 
 func main() {
-	config.Load("conf/config.json")
+	config.Load(filepath.Join("..", "..", "conf", "config.json"))
 	timeslice, err := strconv.Atoi(config.Client.Time)
 	if err != nil {
 		fmt.Println("parse timeslice err")

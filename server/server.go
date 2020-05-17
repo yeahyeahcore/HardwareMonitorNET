@@ -13,12 +13,10 @@ func Init() {
 
 func Start() {
 	r := gin.Default()
-
-	r.POST("/", func(c *gin.Context) {
+	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"response": ob,
+			"message": "pong",
 		})
 	})
-
-	r.Run(fmt.Sprintf("%s:%s", config.Server.Host, config.Server.Port))
+	r.Run(fmt.Sprintf("%s:%s", config.Server.Host, config.Server.Port)) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
