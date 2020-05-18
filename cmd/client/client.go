@@ -26,12 +26,9 @@ func main() {
 		cmd := exec.Command("InfoCheck.exe")
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
-			fmt.Println("pipe err")
 			log.Fatal(err)
 		}
-
 		if err := cmd.Start(); err != nil {
-			fmt.Println("start err")
 			log.Fatal(err)
 		}
 
@@ -42,7 +39,7 @@ func main() {
 		}
 
 		resp, err := http.Post(
-			fmt.Sprintf("http://%s:%s/", config.Server.Host, config.Server.Port),
+			fmt.Sprintf("http://%s:%s/info", config.Server.Host, config.Server.Port),
 			"application/json",
 			bytes.NewBuffer(buf),
 		)
