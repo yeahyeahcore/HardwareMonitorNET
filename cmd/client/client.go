@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
-	"path/filepath"
 	"strconv"
 	"time"
 
@@ -15,15 +14,26 @@ import (
 )
 
 func main() {
-	config.Load(filepath.Join("..", "..", "conf", "config.json"))
+
+	config.Load("config.json")
+
 	timeslice, err := strconv.Atoi(config.Client.Time)
 	if err != nil {
 		fmt.Println("parse timeslice err")
 		log.Fatal(err)
 	}
 
+	path, err := exec.LookPath("InfoCheck.exe")
+	if err != nil {
+		fmt.Printf("Файл %s не найден", path)
+	}
+
+	fmt.Printf("Доступ к файлу %s\n", path)
+	fmt.Println("Подключение... (если консоль горит, значит подключено успешно!)")
+
 	for true {
 		cmd := exec.Command("InfoCheck.exe")
+
 		stdout, err := cmd.StdoutPipe()
 		if err != nil {
 			log.Fatal(err)
@@ -39,12 +49,13 @@ func main() {
 		}
 
 		resp, err := http.Post(
-			fmt.Sprintf("http://%s:%s/info", config.Server.Host, config.Server.Port),
+			fmt.Sprintf("http://%s:%s/post_info", config.Server.Host, config.Server.Port),
 			"application/json",
 			bytes.NewBuffer(buf),
 		)
 		if err != nil {
-			fmt.Println("post err")
+			fmt.Println("Ошибка подключения")
+			time.Sleep(time.Duration(timeslice) * time.Second)
 			log.Fatal(err)
 		}
 		if resp.StatusCode != 200 {
@@ -53,4 +64,5 @@ func main() {
 
 		time.Sleep(time.Duration(timeslice) * time.Second)
 	}
+
 }

@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	config.Load(filepath.Join("..", "..", "conf", "config.json"))
+	config.Load(filepath.Join("config.json"))
 	server.Init()
 	server.Start()
 }

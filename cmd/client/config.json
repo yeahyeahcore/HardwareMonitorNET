@@ -1,0 +1,10 @@
+{
+    "server":{
+    "host":"localhost",
+    "port":"5000"
+    },
+    "client":{
+        "id":"asfasgscgchgdhf",
+        "time": "5"
+    }
+}
