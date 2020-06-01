@@ -1,9 +1,16 @@
 {
     "server":{
         "host":"localhost",
-        "port":"80"
+        "port":"5000",
+        "storage":{
+            "driver":"postgresql",
+            "connection":"postgresql://admin:admin@localhost:54323/monitor?sslmode=disable",
+            "max_idle_connection":5,
+            "max_open_connection":5
+        }
     },
     "client":{
         "time": "5"
     }
+    
 }

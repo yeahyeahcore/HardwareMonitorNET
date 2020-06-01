@@ -1,5 +1,6 @@
 package config
 
+//omitempy если ноль будет то ничего не запишет
 type config struct {
 	Server server `json:"server,omitempty"`
 	Client client `json:"client,omitempty"`

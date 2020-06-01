@@ -1,62 +1,32 @@
 {
     "ComputerName":"Lenovo Lenovo Y50-70",
-
     "NameCPU":"Intel Core i7-4720HQ",
-
     "TemperatureCPU":[
-    "CPU Core #1 : 64",
-    "CPU Core #2 : 68",
-    "CPU Core #3 : 66",
-    "CPU Core #4 : 65"
+    56,
+    58,
+    54,
+    58
     ],
-
     "ClocksCPU":[
-    "CPU Core #1 : 2993,081",
-    "CPU Core #2 : 3392,159",
-    "CPU Core #3 : 3392,159",
-    "CPU Core #4 : 3392,159"
+    2594.00366,
+    2594.00366,
+    2594.00366,
+    2594.00366
     ],
-
-    "LoadCPU":{}
-    "CPU Core #1": 50,
-    "CPU Core #2": 100,
-    "CPU Core #3 : 0",
-    "CPU Core #4 : 50"
-    ],
-
-    //всё в отдельное
-    "PowerCPU":[
-    "CPU Package : 30,49071",
-    "CPU Cores : 20,77824",
-    "CPU Graphics : 0",
-    "CPU DRAM : 1,641544"
-    ],
-
-    //тупо число
-    "MemoryLoad":"Memory : 72,71867",
-
+    "MemoryLoad":74.90483,
     "MemoryData":[
-    "Used Memory : 5,755211",
-    "Available Memory : 2,159119"
+    5.928562,
+    1.98576736
     ],
-
     "NameHDD":"HGST HTS541010A7E630",
-
-    "TemperatureHDD":"32",
-
+    "TemperatureHDD":34,
     "NameGPU":"NVIDIA GeForce GTX 960M",
-
-    "ClocksGPU":"error",
-
-    "LoadGPU":"0,7598877",
-
+    "LoadGPU":0.7598877,
     "DataGPU":[
-    "GPU Memory Total:4096",
-    "GPU Memory Used:31,125",
-    "GPU Memory Free:4064,875"
+    4096,
+    31.125,
+    4064.875
     ],
-
     "LocalIpAddress":"192.168.1.2",
-
     "MACaddress":"AC-D1-B8-E3-4E-75"
 }

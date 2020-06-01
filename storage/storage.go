@@ -21,11 +21,14 @@ var (
 
 // Tables
 var (
-	Devices devices
+	Devices    devices
+	Parameters parameters
 )
 
 func Init() {
 	fmt.Println("\nInit storage...")
+	fmt.Println(config.Server.Storage.Connection)
+	fmt.Println(config.Server.Host)
 
 	connCfg, err := pgx.ParseURI(config.Server.Storage.Connection)
 	if err != nil {
