@@ -50,9 +50,7 @@ type parameters struct{}
 func (p *parameters) Insert(tx *sqlx.Tx, param *Parameter) error {
 	_, err := tx.Exec(`
 		INSERT INTO parameters(
-			id, 
 			device_id, 
-			created_at,
 			cpu_temp,
 			cpu_clock,
 			memory_load,
@@ -63,10 +61,8 @@ func (p *parameters) Insert(tx *sqlx.Tx, param *Parameter) error {
 			gpu_memory_used,
 			gpu_memory_free
 		)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
-		param.ID,
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
 		param.DeviceID,
-		param.CreatedAt,
 		pq.Array(param.CPU.Temp),
 		pq.Array(param.CPU.Clock),
 		param.Memory.Load,

@@ -2,16 +2,17 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"os/exec"
 	"strconv"
 	"time"
 
 	"github.com/yeahyeahcore/HardwareMonitorNET/config"
+	"github.com/yeahyeahcore/HardwareMonitorNET/storage"
 )
 
 func main() {
@@ -32,8 +33,21 @@ func main() {
 	fmt.Printf("Доступ к файлу %s\n", path)
 	fmt.Println("Подключение... (если консоль горит, значит подключено успешно!)")
 
-	jsonFile, err := os.Open("config.json")
-	buf, _ := ioutil.ReadAll(jsonFile)
+	cmd := exec.Command("InfoCheck.exe")
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := cmd.Start(); err != nil {
+		log.Fatal(err)
+	}
+
+	buf, err := ioutil.ReadAll(stdout)
+	if err != nil {
+		fmt.Println("readall err")
+		log.Fatal(err)
+	}
+
 	resp, err := http.Post(
 		fmt.Sprintf("http://%s:%s/config_info", config.Server.Host, config.Server.Port),
 		"application/json",
@@ -59,16 +73,27 @@ func main() {
 			log.Fatal(err)
 		}
 
-		buf, err := ioutil.ReadAll(stdout)
+		var params storage.Parameter
+		err = json.NewDecoder(stdout).Decode(&params)
 		if err != nil {
-			fmt.Println("readall err")
+			fmt.Println("decode err")
+			log.Fatal(err)
+		}
+
+		params.DeviceID = config.Client.ID
+
+		buf := bytes.NewBuffer(nil)
+		err = json.NewEncoder(buf).Encode(params)
+
+		if err != nil {
+			fmt.Println("encode err")
 			log.Fatal(err)
 		}
 
 		resp, err := http.Post(
 			fmt.Sprintf("http://%s:%s/post_info", config.Server.Host, config.Server.Port),
 			"application/json",
-			bytes.NewBuffer(buf),
+			buf,
 		)
 		if err != nil {
 			fmt.Println("Ошибка подключения")

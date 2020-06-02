@@ -7,9 +7,9 @@ type Device struct {
 	ID         string  `db:"id" json:"id,omitempty"`
 	PC         string  `db:"pc_name" json:"pc,omitempty"`
 	MACAddress string  `db:"mac_address" json:"mac_address,omitempty"`
-	CPU        *string `db:"cpu_name" json:"cpu,omitempty"`
-	HDD        *string `db:"hdd_name" json:"hdd,omitempty"`
-	GPU        *string `db:"gpu_name" json:"gpu,omitempty"`
+	CPU        *string `db:"cpu_name" json:"cpu_name,omitempty"`
+	HDD        *string `db:"hdd_name" json:"hdd_name,omitempty"`
+	GPU        *string `db:"gpu_name" json:"gpu_name,omitempty"`
 }
 
 type devices struct{}
