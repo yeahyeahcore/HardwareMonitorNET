@@ -7,14 +7,14 @@ type config struct {
 }
 
 type server struct {
-	Host    string  `json:"host,omitempty"`
-	Port    string  `json:"port,omitempty"`
-	Storage storage `json:"storage,omitempty"`
+	Host    string   `json:"host,omitempty"`
+	Port    string   `json:"port,omitempty"`
+	Storage *storage `json:"storage,omitempty"`
 }
 
 type client struct {
-	ID   string `json:"id,omitempty"`
-	Time string `json:"time,omitempty"`
+	ID       string `json:"id,omitempty"`
+	PauseSec int    `json:"pause_sec,omitempty"`
 }
 
 type storage struct {

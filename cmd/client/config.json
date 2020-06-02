@@ -1,10 +1,10 @@
 {
-    "server":{
-    "host":"192.168.1.2",
-    "port":"5000"
-    },
-    "client":{
-        "id":"asfasgscgchgdhf",
-        "time": "5"
-    }
+  "server": {
+    "host": "Enter Server Host",
+    "port": "Enter Server Post"
+  },
+  "client": {
+    "id": "brb89ijrge4d6agc2650",
+    "pause_sec": 30
+  }
 }

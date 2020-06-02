@@ -21,6 +21,17 @@
             "program": "${workspaceFolder}\\cmd\\client",
             "env": {},
             "args": []
+        },
+        {
+            "name": "Init Client",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/client",
+            "env": {},
+            "args": [
+                "init"
+            ]
         }
     ]
 }
