@@ -16,15 +16,15 @@ type devices struct{}
 
 func (d *devices) Insert(tx *sqlx.Tx, device *Device) error {
 	_, err := tx.Exec(`
-		INSERT INTO devices
-		VALUES ($1, $2, $3, $4, $5, $6)
-		ON CONFLICT (id) DO UPDATE SET
-			pc_name = $2,
-			mac_address = $3,
-			cpu_name = $4,
-			hdd_name = $5,
-			gpu_name = $6
-	`,
+		INSERT INTO devices(
+			id,
+			pc_name,
+			mac_address,
+			cpu_name,
+			hdd_name,
+			gpu_name
+		)
+		VALUES ($1, $2, $3, $4, $5, $6)`,
 		device.ID,
 		device.PC,
 		device.MACAddress,

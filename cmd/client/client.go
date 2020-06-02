@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"os/exec"
 	"strconv"
 	"time"
@@ -30,6 +31,22 @@ func main() {
 
 	fmt.Printf("Доступ к файлу %s\n", path)
 	fmt.Println("Подключение... (если консоль горит, значит подключено успешно!)")
+
+	jsonFile, err := os.Open("config.json")
+	buf, _ := ioutil.ReadAll(jsonFile)
+	resp, err := http.Post(
+		fmt.Sprintf("http://%s:%s/config_info", config.Server.Host, config.Server.Port),
+		"application/json",
+		bytes.NewBuffer(buf),
+	)
+	if err != nil {
+		fmt.Println("Ошибка подключения")
+		time.Sleep(time.Duration(timeslice) * time.Second)
+		log.Fatal(err)
+	}
+	if resp.StatusCode != 200 {
+		fmt.Println("status err", resp.Status)
+	}
 
 	for true {
 		cmd := exec.Command("InfoCheck.exe")

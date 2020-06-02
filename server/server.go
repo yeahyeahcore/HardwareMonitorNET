@@ -22,6 +22,7 @@ func Start() {
 		})
 	})
 
+	r.POST("/config_info", handleConfigInfo)
 	r.POST("/post_info", handlePostInfo)
 
 	r.Run(fmt.Sprintf("%s:%s", config.Server.Host, config.Server.Port)) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")

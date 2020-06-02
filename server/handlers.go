@@ -13,6 +13,7 @@ func handlePostInfo(c *gin.Context) {
 	defer c.Request.Body.Close()
 
 	var data storage.Parameter
+
 	err := json.NewDecoder(c.Request.Body).Decode(&data)
 	if err != nil {
 		log.Println(err)
@@ -28,6 +29,37 @@ func handlePostInfo(c *gin.Context) {
 	}
 
 	err = storage.Parameters.Insert(tx, &data)
+	if err != nil {
+		log.Println(err)
+		c.String(http.StatusInternalServerError, err.Error())
+		tx.Rollback()
+		return
+	}
+
+	tx.Commit()
+	c.Status(http.StatusOK)
+}
+
+func handleConfigInfo(c *gin.Context) {
+	defer c.Request.Body.Close()
+
+	var data storage.Device
+
+	err := json.NewDecoder(c.Request.Body).Decode(&data)
+	if err != nil {
+		log.Println(err)
+		c.String(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	tx, err := storage.Tx()
+	if err != nil {
+		log.Println(err)
+		c.String(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	err = storage.Devices.Insert(tx, &data)
 	if err != nil {
 		log.Println(err)
 		c.String(http.StatusInternalServerError, err.Error())
