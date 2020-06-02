@@ -4,15 +4,17 @@ import (
 	"time"
 
 	"github.com/jmoiron/sqlx"
+
+	"github.com/lib/pq"
 )
 
 //CPU структура из БД
 type CPU struct {
-	Temp  []int     `db:"cpu_temp" json:"temp,omitempty"`
+	Temp  []float32 `db:"cpu_temp" json:"temp,omitempty"`
 	Clock []float32 `db:"cpu_clock" json:"clock,omitempty"`
 }
 
-//Memory структура из БД
+//Memory структура из БД(вот тут поправить нужно будет)
 type Memory struct {
 	Load      *float32 `db:"memory_load" json:"load,omitempty"`
 	Used      *float32 `db:"memory_used" json:"used,omitempty"`
@@ -21,7 +23,7 @@ type Memory struct {
 
 //HDD структура из БД
 type HDD struct {
-	Temp *int `db:"hdd_temp" json:"temp,omitempty"`
+	Temp *float32 `db:"hdd_temp" json:"temp,omitempty"`
 }
 
 //GPU структура из БД
@@ -50,9 +52,9 @@ func (p *parameters) Insert(tx *sqlx.Tx, param *Parameter) error {
 		INSERT INTO parameters(
 			id, 
 			device_id, 
+			created_at,
 			cpu_temp,
 			cpu_clock,
-			cpu_load,
 			memory_load,
 			memory_used,
 			memory_available,
@@ -61,11 +63,12 @@ func (p *parameters) Insert(tx *sqlx.Tx, param *Parameter) error {
 			gpu_memory_used,
 			gpu_memory_free
 		)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
 		param.ID,
 		param.DeviceID,
-		param.CPU.Temp,
-		param.CPU.Clock,
+		param.CreatedAt,
+		pq.Array(param.CPU.Temp),
+		pq.Array(param.CPU.Clock),
 		param.Memory.Load,
 		param.Memory.Used,
 		param.Memory.Available,

@@ -2,7 +2,7 @@ package storage
 
 import "github.com/jmoiron/sqlx"
 
-//Device структура из БД
+//Device структура из БД(и вот тут)
 type Device struct {
 	ID         string  `db:"id" json:"id,omitempty"`
 	PC         string  `db:"pc_name" json:"pc,omitempty"`
