@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os/exec"
 	"time"
@@ -47,17 +46,24 @@ func run(c *cli.Context) error {
 		return err
 	}
 
-	buf, err := ioutil.ReadAll(stdout)
+	var device storage.Device
+	err = json.NewDecoder(stdout).Decode(&device)
 	if err != nil {
-		fmt.Println("readall err")
+		fmt.Println("decode err")
 		return err
 	}
+
+	device.ID = config.Client.ID
+
+	buf := bytes.NewBuffer(nil)
+	err = json.NewEncoder(buf).Encode(device)
 
 	resp, err := http.Post(
 		fmt.Sprintf("http://%s:%s/config_info", config.Server.Host, config.Server.Port),
 		"application/json",
-		bytes.NewBuffer(buf),
+		buf,
 	)
+
 	if err != nil {
 		fmt.Println("Ошибка подключения")
 		return err
